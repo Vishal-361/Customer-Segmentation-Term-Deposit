@@ -1,0 +1,296 @@
+{
+  "dataset": "UCI Bank Marketing \u2014 bank-full.csv (45,211 rows)",
+  "source_url": "https://archive.ics.uci.edu/static/public/222/bank+marketing.zip",
+  "citation": "Moro et al., 2011, 'Using Data Mining for Bank Direct Marketing'",
+  "target_note": "Target y = subscribed to a term deposit. This is a SUBSCRIPTION/ response model, NOT a churn model \u2014 Bank Marketing has no churn label.",
+  "leakage_note": "'duration' (last call length) excluded from the classifier: it is only known after the call ends.",
+  "eda": {
+    "rows": 45211,
+    "columns": 17,
+    "target": "y (subscribed to term deposit)",
+    "subscription_rate": 0.117,
+    "subscribers": 5289,
+    "non_subscribers": 39922,
+    "missing_values_total": 0,
+    "date_range": "May 2008 \u2013 Nov 2010 (per UCI docs)",
+    "numeric_summary": {
+      "age": {
+        "count": 45211.0,
+        "mean": 40.94,
+        "std": 10.62,
+        "min": 18.0,
+        "25%": 33.0,
+        "50%": 39.0,
+        "75%": 48.0,
+        "max": 95.0
+      },
+      "balance": {
+        "count": 45211.0,
+        "mean": 1362.27,
+        "std": 3044.77,
+        "min": -8019.0,
+        "25%": 72.0,
+        "50%": 448.0,
+        "75%": 1428.0,
+        "max": 102127.0
+      },
+      "day": {
+        "count": 45211.0,
+        "mean": 15.81,
+        "std": 8.32,
+        "min": 1.0,
+        "25%": 8.0,
+        "50%": 16.0,
+        "75%": 21.0,
+        "max": 31.0
+      },
+      "duration": {
+        "count": 45211.0,
+        "mean": 258.16,
+        "std": 257.53,
+        "min": 0.0,
+        "25%": 103.0,
+        "50%": 180.0,
+        "75%": 319.0,
+        "max": 4918.0
+      },
+      "campaign": {
+        "count": 45211.0,
+        "mean": 2.76,
+        "std": 3.1,
+        "min": 1.0,
+        "25%": 1.0,
+        "50%": 2.0,
+        "75%": 3.0,
+        "max": 63.0
+      },
+      "pdays": {
+        "count": 45211.0,
+        "mean": 40.2,
+        "std": 100.13,
+        "min": -1.0,
+        "25%": -1.0,
+        "50%": -1.0,
+        "75%": -1.0,
+        "max": 871.0
+      },
+      "previous": {
+        "count": 45211.0,
+        "mean": 0.58,
+        "std": 2.3,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 0.0,
+        "max": 275.0
+      }
+    },
+    "never_contacted_before_share_pdays_minus1": 0.8174,
+    "negative_balance_share": 0.0833,
+    "subscription_rate_by_poutcome": {
+      "failure": 0.1261,
+      "other": 0.1668,
+      "success": 0.6473,
+      "unknown": 0.0916
+    },
+    "subscription_rate_by_contact": {
+      "cellular": 0.1492,
+      "telephone": 0.1342,
+      "unknown": 0.0407
+    },
+    "subscription_rate_by_month": {
+      "apr": 0.1968,
+      "aug": 0.1101,
+      "dec": 0.4673,
+      "feb": 0.1665,
+      "jan": 0.1012,
+      "jul": 0.0909,
+      "jun": 0.1022,
+      "mar": 0.5199,
+      "may": 0.0672,
+      "nov": 0.1015,
+      "oct": 0.4377,
+      "sep": 0.4646
+    },
+    "subscription_rate_by_job_top": {
+      "student": 0.2868,
+      "retired": 0.2279,
+      "unemployed": 0.155,
+      "management": 0.1376,
+      "admin.": 0.122
+    },
+    "job_counts": {
+      "blue-collar": 9732,
+      "management": 9458,
+      "technician": 7597,
+      "admin.": 5171,
+      "services": 4154,
+      "retired": 2264,
+      "self-employed": 1579,
+      "entrepreneur": 1487,
+      "unemployed": 1303,
+      "housemaid": 1240,
+      "student": 938,
+      "unknown": 288
+    },
+    "median_balance": 448.0,
+    "mean_balance": 1362.27,
+    "median_age": 39.0,
+    "mean_age": 40.94,
+    "median_previous_contacts": 0.0
+  },
+  "segmentation": {
+    "method": "K-Means on standardised RFM-style features (recency=pdays with -1 never-contacted recoded to 999, frequency=previous, monetary=balance clipped p1/p99); silhouette scores on a random 10,000-row sample",
+    "silhouette_by_k": {
+      "2": 0.7191,
+      "3": 0.745,
+      "4": 0.7526,
+      "5": 0.6931,
+      "6": 0.6789,
+      "7": 0.6837
+    },
+    "best_k": 4,
+    "segments": [
+      {
+        "segment": 2,
+        "size": 1515,
+        "share": 0.0335,
+        "mean_recency_pdays": 208.1,
+        "median_recency_pdays": 184.0,
+        "share_never_contacted": 0.0,
+        "mean_frequency_previous": 8.54,
+        "mean_balance_eur": 1454.88,
+        "median_balance_eur": 640.0,
+        "mean_age": 41.4,
+        "subscription_rate": 0.262,
+        "subscribers": 397,
+        "top_job": "management"
+      },
+      {
+        "segment": 1,
+        "size": 6438,
+        "share": 0.1424,
+        "mean_recency_pdays": 226.9,
+        "median_recency_pdays": 199.0,
+        "share_never_contacted": 0.0,
+        "mean_frequency_previous": 1.98,
+        "mean_balance_eur": 1107.26,
+        "median_balance_eur": 545.5,
+        "mean_age": 40.8,
+        "subscription_rate": 0.2195,
+        "subscribers": 1413,
+        "top_job": "management"
+      },
+      {
+        "segment": 3,
+        "size": 2967,
+        "share": 0.0656,
+        "mean_recency_pdays": 924.8,
+        "median_recency_pdays": 999.0,
+        "share_never_contacted": 0.9053,
+        "mean_frequency_previous": 0.18,
+        "mean_balance_eur": 9390.0,
+        "median_balance_eur": 7203.0,
+        "mean_age": 43.7,
+        "subscription_rate": 0.1392,
+        "subscribers": 413,
+        "top_job": "management"
+      },
+      {
+        "segment": 0,
+        "size": 34291,
+        "share": 0.7585,
+        "mean_recency_pdays": 998.8,
+        "median_recency_pdays": 999.0,
+        "share_never_contacted": 0.9993,
+        "mean_frequency_previous": 0.0,
+        "mean_balance_eur": 711.47,
+        "median_balance_eur": 345.0,
+        "mean_age": 40.7,
+        "subscription_rate": 0.0894,
+        "subscribers": 3066,
+        "top_job": "blue-collar"
+      }
+    ]
+  },
+  "classifier": {
+    "logistic_regression": {
+      "test_auc": 0.7722,
+      "cv_auc_mean_3fold_train": 0.7634,
+      "cv_auc_std_3fold_train": 0.0039,
+      "precision_at_0.5": 0.2662,
+      "recall_at_0.5": 0.6238,
+      "f1_at_0.5": 0.3732,
+      "confusion_matrix_test": {
+        "tn": 6166,
+        "fp": 1819,
+        "fn": 398,
+        "tp": 660
+      }
+    },
+    "random_forest": {
+      "test_auc": 0.7945,
+      "cv_auc_mean_3fold_train": 0.7739,
+      "cv_auc_std_3fold_train": 0.0063,
+      "precision_at_0.5": 0.6446,
+      "recall_at_0.5": 0.2212,
+      "f1_at_0.5": 0.3293,
+      "confusion_matrix_test": {
+        "tn": 7856,
+        "fp": 129,
+        "fn": 824,
+        "tp": 234
+      }
+    },
+    "random_forest_recall80_operating_point": {
+      "threshold_chosen_on_oof_train_probs": 0.06,
+      "oof_train_recall_at_threshold": 0.805,
+      "test_precision": 0.1966,
+      "test_recall": 0.8318,
+      "test_f1": 0.318,
+      "test_flagged_share": 0.495
+    },
+    "random_forest_top_features": [
+      {
+        "feature": "num__balance",
+        "importance": 0.1597
+      },
+      {
+        "feature": "num__age",
+        "importance": 0.1363
+      },
+      {
+        "feature": "num__day",
+        "importance": 0.1203
+      },
+      {
+        "feature": "num__campaign",
+        "importance": 0.0679
+      },
+      {
+        "feature": "num__pdays",
+        "importance": 0.0402
+      },
+      {
+        "feature": "cat__poutcome_success",
+        "importance": 0.0344
+      },
+      {
+        "feature": "cat__contact_unknown",
+        "importance": 0.0251
+      },
+      {
+        "feature": "num__previous",
+        "importance": 0.0223
+      },
+      {
+        "feature": "cat__contact_cellular",
+        "importance": 0.019
+      },
+      {
+        "feature": "cat__housing_yes",
+        "importance": 0.0179
+      }
+    ]
+  }
+}
