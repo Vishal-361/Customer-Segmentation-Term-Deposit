@@ -1,6 +1,6 @@
 # Customer Segmentation & Response Modelling — UCI Bank Marketing
 
-Customer segmentation (K-Means on RFM-style features) plus a
+Customer segmentation (K-Means on behavioural features — balance, age, and campaign contact history) plus a
 subscription-propensity classifier (Logistic Regression + Random Forest),
 built on the real UCI Bank Marketing dataset — 45,211 customers from a
 Portuguese bank's phone-marketing campaigns (May 2008 – Nov 2010).
@@ -70,7 +70,7 @@ Runtime is ~1–3 minutes on a normal laptop (45k rows, no sampling needed).
 ## Project structure
 
 ```
-Customer-Segmentation-Churn/
+Customer-Segmentation-Term-Deposit/
 ├── main.py            # the whole pipeline: EDA → K-Means → classifiers
 ├── requirements.txt
 ├── README.md
